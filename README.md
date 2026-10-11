@@ -3,6 +3,10 @@
 > Good intentions, shaky hands. STP does not know what he is doing. We test, we write down what we think we saw, and that is the whole product. A number here is not the truth. A chart is not the truth. Any other sentence that sounds sure of itself is not the truth either. Do not count any of it as a claim.
 >
 > [Disclaimer](DISCLAIMER.md)
+>
+> **Part of [tn-master](https://github.com/STP-KAS/tn-master)**, the map of every TN10 storm. Renamed on 11 Oct 2026 from `grok-bot-vprogs-round1-public`; old links redirect here.
+>
+> ← previous storm: [tn10-storm-2026-09-25-indexer-stall](https://github.com/STP-KAS/tn10-storm-2026-09-25-indexer-stall) | next storm: [tn10-storm-2026-09-25-r2](https://github.com/STP-KAS/tn10-storm-2026-09-25-r2) →
 
 > **Experimental only. Not a product.**
 >
@@ -10,15 +14,15 @@
 
 # TN10 full-load stress & break test + vprogs (25 Sep 2026)
 
-> **Mainnet labels (added 4 Oct 2026).** Kaspa Testnet-10 only. Every statement about mainnet in this file now carries a label: **A** = shown on TN10, backed by our own measured data (TN10 only, never proof for mainnet); **B** = plausible for mainnet but unsure, reason given; **C** = unknown, needs more testing and review. Claims, evidence and the tests still needed: [TN10 storms: what they do and do not say about a mainnet storm](https://github.com/STP-KAS/tn10-storm-2026-10-public-report/blob/main/TN10-STORMS-MAINNET-IMPLICATIONS-2026-10-04.md).
+> **Mainnet labels (added 4 Oct 2026).** Kaspa Testnet-10 only. Every statement about mainnet in this file now carries a label: **A** = shown on TN10, backed by our own measured data (TN10 only, never proof for mainnet); **B** = plausible for mainnet but unsure, reason given; **C** = unknown, needs more testing and review. Claims, evidence and the tests still needed: [TN10 storms: what they do and do not say about a mainnet storm](https://github.com/STP-KAS/tn10-storm-2026-10-01/blob/main/TN10-STORMS-MAINNET-IMPLICATIONS-2026-10-04.md).
 
 > Clean public copy (history squashed) of a private working repo.
 >
-> **Copy of private repo `STP-KAS/grok-bot-vprogs` (history squashed for privacy).** Originally created **25 Sep 2026 20:54 CEST**, last updated **26 Sep 2026 07:51 CEST** (report branch `tn10-break-report`; the Windows campaign-runner branch last changed 25 Sep 2026 21:50 CEST, and its `campaign/` files are included here). The report covers the TN10 round-1 run of **25 Sep 2026, ~20:12 to 22:46 CEST** (round 2 continued to 26 Sep 06:31 CEST). The single commit here is dated 26 Sep 2026 only because history was squashed. Local user paths were replaced with `<user>` and email addresses were removed.
+> **Copy of private repo `STP-KAS/tn10-storm-2026-09-25-r1-private` (history squashed for privacy).** Originally created **25 Sep 2026 20:54 CEST**, last updated **26 Sep 2026 07:51 CEST** (report branch `tn10-break-report`; the Windows campaign-runner branch last changed 25 Sep 2026 21:50 CEST, and its `campaign/` files are included here). The report covers the TN10 round-1 run of **25 Sep 2026, ~20:12 to 22:46 CEST** (round 2 continued to 26 Sep 06:31 CEST). The single commit here is dated 26 Sep 2026 only because history was squashed. Local user paths were replaced with `<user>` and email addresses were removed.
 
 > **Testnet-10 only.** No seed, private key, wallet state file or anything from the operator's secure directory is in
 > this repo (`tools/secret-scan.sh` runs before every push). **Round 2 final** (22:47:26 → 06:31:10 CEST: disk-taper stop, ~7h44m,
-> peak 12,175 TPS, ~197.8k TKAS burned, recovery N/A at mempool=7) lives in **https://github.com/STP-KAS/grok-bot-vprogs-round2**.
+> peak 12,175 TPS, ~197.8k TKAS burned, recovery N/A at mempool=7) lives in **https://github.com/STP-KAS/tn10-storm-2026-09-25-r2**.
 >
 > Numbers marked **[unverified]** come from operator notes or the explorer UI and are not backed by a committed log. Everything else was
 > re-read from the logs in `logs/` while writing this. Times are CEST (UTC+2) unless marked UTC.
@@ -38,7 +42,7 @@ breakage up as a bug report. Alongside it, we tried to run **vprogs** (Kaspa's v
 Inspiration:
 - Maksim Biriukov's post: *"Play the game https://vprogs-tt.izio.fr/, read the code github.com/biryukovmaxim/vprog-tictactoe, build your own
   vprog kaspanet/vprogs release-candidate."*
-- The operator's desk note **https://github.com/STP-KAS/vprogs-tn-desk-public** (SilverScript v1.0.0 vs the vprogs demo; frozen settlement;
+- The operator's desk note **https://github.com/STP-KAS/tn10-storm-2026-09-25-vprogs-desk** (SilverScript v1.0.0 vs the vprogs demo; frozen settlement;
   issue-126 reorg-below-floor guard; version-stamp trap). Its checks were re-run here — see [findings/D1](findings/D1-desk-note-checks.md).
 
 In plain words: we ran our own Kaspa nodes and miners on the test network, made thousands of throwaway wallets send each other coins as
@@ -95,7 +99,7 @@ Testing this on TN10 now, with real node software, is much cheaper than discover
 | 22:47:16 | 299,993 TKAS moved from storm pools to another agent's build wallet (`kaspatest:qzzkwgjh…wtgzv`, receive-only) in 1,184 txs |
 | 22:47:26 | **Round 2 start (PHASE4-MAX):** supervisor restarted with **fee 2× (200 sompi/g)** for all workers, hard brake at 90k mempool, taper 40–60k, gate 70k/50k |
 | 22:48:33 | Planned recovery pause cancelled by user (0 s) — the clean recovery measurement is deferred until funds run out |
-| 22:48:55 → | `RATE_MAX` 9,000 → 20,000; round 2 then evolved (10× fee, 1k baseline, disk taper) and **ended 06:31:10 CEST 26 Sep** → **final write-up:** https://github.com/STP-KAS/grok-bot-vprogs-round2 |
+| 22:48:55 → | `RATE_MAX` 9,000 → 20,000; round 2 then evolved (10× fee, 1k baseline, disk taper) and **ended 06:31:10 CEST 26 Sep** → **final write-up:** https://github.com/STP-KAS/tn10-storm-2026-09-25-r2 |
 
 ## 4. Metrics and timeline
 
@@ -294,11 +298,11 @@ The tic-tac-toe `campaign/` runner and its original note are on the `main` branc
 ## Round 2 final (26 Sep 2026)
 Round 2 ran from **22:47:26 CEST 25 Sep** to **06:31:10 CEST 26 Sep** (~7 h 44 min). It stopped because the supervisor **disk taper** (9.5→8.4 GB free) wound RATE from 1,000 (05:25) toward 0 (~06:30); recovery-watch then fired with **mempool=7**, so drain metrics are N/A. Whole-window network TPS: median **1,548** / mean **2,507** / peak **12,175** (regimes mixed: 2× full, 10× full, 1k baseline, taper). Storm fee burn ≈ **197,803 TKAS**. Mempool peak in-window **~88k** (the 21:12 crash was before round 2). Grok Build agent (funded ~300k TKAS at 22:47) was an outside confounder.
 
-**Full write-up + logs:** [STP-KAS/grok-bot-vprogs-round2](https://github.com/STP-KAS/grok-bot-vprogs-round2).
+**Full write-up + logs:** [STP-KAS/tn10-storm-2026-09-25-r2](https://github.com/STP-KAS/tn10-storm-2026-09-25-r2).
 
 ## Round 3 (26 Sep 2026)
-vprogs under a TN10 storm: our own vprog on vprogs master and tic-tac-toe, plus the n0 `--utxoindex` restart. See [STP-KAS/grok-bot-vprogs-round3](https://github.com/STP-KAS/grok-bot-vprogs-round3).
+vprogs under a TN10 storm: our own vprog on vprogs master and tic-tac-toe, plus the n0 `--utxoindex` restart. See [STP-KAS/tn10-storm-2026-09-26-r3](https://github.com/STP-KAS/tn10-storm-2026-09-26-r3).
 
 ## Round 4 and later
 
-The **final** round-4 report (data up to 09:20 CEST 26 Sep) is [here](https://github.com/STP-KAS/grok-bot-vprogs-round4). Later rounds: [5](https://github.com/STP-KAS/grok-bot-vprogs-round5) · [6](https://github.com/STP-KAS/grok-bot-vprogs-round6) · [7](https://github.com/STP-KAS/tn10-vprogs-round7-ideas) · [8](https://github.com/STP-KAS/tn10-vprogs-round8-covenants). Summary of all rounds: [tn10-vprogs-stress-findings](https://github.com/STP-KAS/tn10-vprogs-stress-findings).
+The **final** round-4 report (data up to 09:20 CEST 26 Sep) is [here](https://github.com/STP-KAS/tn10-storm-2026-09-26-r4). Later rounds: [5](https://github.com/STP-KAS/tn10-storm-2026-09-26-r5) · [6](https://github.com/STP-KAS/tn10-storm-2026-09-26-r6) · [7](https://github.com/STP-KAS/tn10-storm-2026-09-26-r7) · [8](https://github.com/STP-KAS/tn10-storm-2026-09-26-r8). Summary of all rounds: [tn10-storm-2026-09-25](https://github.com/STP-KAS/tn10-storm-2026-09-25).

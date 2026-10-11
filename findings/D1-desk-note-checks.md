@@ -1,6 +1,6 @@
-# D1: checks carried over from the desk note (STP-KAS/vprogs-tn-desk-public)
+# D1: checks carried over from the desk note (STP-KAS/tn10-storm-2026-09-25-vprogs-desk)
 
-Evidence is in `logs/A*.txt`, `logs/B*`; the desk note itself is at https://github.com/STP-KAS/vprogs-tn-desk-public.
+Evidence is in `logs/A*.txt`, `logs/B*`; the desk note itself is at https://github.com/STP-KAS/tn10-storm-2026-09-25-vprogs-desk.
 
 | Check | Result | Evidence |
 |---|---|---|
